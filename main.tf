@@ -10,8 +10,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-resource "random_string" "string" {
-  length  = var.length
-  numeric = var.number
-  special = var.special
+resource "aws_appconfig_extension_association" "extension_association" {
+  extension_arn = var.extension_arn
+  parameters    = var.parameters
+  region        = var.region
+  resource_arn  = var.resource_arn
 }
