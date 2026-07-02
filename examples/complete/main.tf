@@ -42,6 +42,12 @@ resource "aws_sns_topic" "extension" {
 
 resource "aws_appconfig_extension" "example" {
   name = module.resource_names["extension"].standard
+  parameter {
+    name        = "NotificationMode"
+    description = "Controls notification behavior for the test association."
+    required    = true
+  }
+
   action_point {
     point = "PRE_CREATE_HOSTED_CONFIGURATION_VERSION"
     action {
@@ -56,6 +62,6 @@ module "extension_association" {
   source = "../.."
 
   extension_arn = aws_appconfig_extension.example.arn
-  parameters    = {}
+  parameters    = { NotificationMode = "default" }
   resource_arn  = aws_appconfig_application.example.arn
 }

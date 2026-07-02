@@ -34,3 +34,8 @@ output "resource_arn" {
   description = "The associated resource ARN."
   value       = aws_appconfig_extension_association.extension_association.resource_arn
 }
+
+output "parameters" {
+  description = "The extension association parameters."
+  value       = aws_appconfig_extension_association.extension_association.parameters
+}

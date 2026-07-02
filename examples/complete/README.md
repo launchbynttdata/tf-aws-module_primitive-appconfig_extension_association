@@ -19,7 +19,6 @@ This example creates a complete AppConfig extension association deployment with 
 
 data "aws_region" "current" {}
 
-data "aws_caller_identity" "current" {}
 
 module "resource_names" {
   source  = "terraform.registry.launch.nttdata.com/module_library/resource_name/launch"
@@ -50,6 +49,12 @@ resource "aws_sns_topic" "extension" {
 
 resource "aws_appconfig_extension" "example" {
   name = module.resource_names["extension"].standard
+  parameter {
+    name        = "NotificationMode"
+    description = "Controls notification behavior for the test association."
+    required    = true
+  }
+
   action_point {
     point = "PRE_CREATE_HOSTED_CONFIGURATION_VERSION"
     action {
@@ -64,7 +69,7 @@ module "extension_association" {
   source = "../.."
 
   extension_arn = aws_appconfig_extension.example.arn
-  parameters    = {}
+  parameters    = { NotificationMode = "default" }
   resource_arn  = aws_appconfig_application.example.arn
 }
 ```
@@ -111,10 +116,12 @@ module "extension_association" {
 |------|-------------|
 | <a name="output_arn"></a> [arn](#output\_arn) | The ARN of the extension association. |
 | <a name="output_expected_extension_arn"></a> [expected\_extension\_arn](#output\_expected\_extension\_arn) | Expected extension ARN. |
+| <a name="output_expected_parameters"></a> [expected\_parameters](#output\_expected\_parameters) | Expected extension association parameters. |
 | <a name="output_expected_resource_arn"></a> [expected\_resource\_arn](#output\_expected\_resource\_arn) | Expected resource ARN. |
 | <a name="output_extension_arn"></a> [extension\_arn](#output\_extension\_arn) | The associated extension ARN. |
 | <a name="output_extension_version"></a> [extension\_version](#output\_extension\_version) | The extension version. |
 | <a name="output_id"></a> [id](#output\_id) | The extension association ID. |
+| <a name="output_parameters"></a> [parameters](#output\_parameters) | The extension association parameters. |
 | <a name="output_region"></a> [region](#output\_region) | The AWS Region where the example resources are deployed. |
 | <a name="output_resource_arn"></a> [resource\_arn](#output\_resource\_arn) | The associated resource ARN. |
 <!-- END_TF_DOCS -->

@@ -43,3 +43,13 @@ output "region" {
   description = "The AWS Region where the example resources are deployed."
   value       = data.aws_region.current.region
 }
+
+output "parameters" {
+  description = "The extension association parameters."
+  value       = module.extension_association.parameters
+}
+
+output "expected_parameters" {
+  description = "Expected extension association parameters."
+  value       = { NotificationMode = "default" }
+}

@@ -52,6 +52,7 @@ No modules.
 | <a name="output_extension_arn"></a> [extension\_arn](#output\_extension\_arn) | The associated extension ARN. |
 | <a name="output_extension_version"></a> [extension\_version](#output\_extension\_version) | The associated extension version. |
 | <a name="output_id"></a> [id](#output\_id) | The extension association ID. |
+| <a name="output_parameters"></a> [parameters](#output\_parameters) | The extension association parameters. |
 | <a name="output_resource_arn"></a> [resource\_arn](#output\_resource\_arn) | The associated resource ARN. |
 <!-- END_TF_DOCS -->
 
