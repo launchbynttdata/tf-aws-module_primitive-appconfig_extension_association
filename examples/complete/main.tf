@@ -80,7 +80,7 @@ resource "aws_appconfig_extension" "example" {
   }
 
   action_point {
-    point = "PRE_CREATE_HOSTED_CONFIGURATION_VERSION"
+    point = "ON_DEPLOYMENT_COMPLETE"
     action {
       name     = "Notify"
       uri      = aws_sns_topic.extension.arn
