@@ -10,25 +10,40 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-variable "length" {
-  description = "Length of the random string to generate."
-  type        = number
-  default     = 24
+# -----------------------------------------------------------------------------
+# Required
+# -----------------------------------------------------------------------------
+
+variable "extension_arn" {
+  description = "ARN of the AppConfig extension to associate."
+  type        = string
 
   validation {
-    condition     = var.length > 0 && var.length < 100
-    error_message = "Length must be a positive integer less than 100."
+    condition     = can(regex("^arn:[^:]+:appconfig:", var.extension_arn))
+    error_message = "extension_arn must be an AppConfig extension ARN."
+  }
+}
+variable "resource_arn" {
+  description = "ARN of the AppConfig resource to associate with the extension."
+  type        = string
+
+  validation {
+    condition     = can(regex("^arn:[^:]+:appconfig:", var.resource_arn))
+    error_message = "resource_arn must be an AppConfig resource ARN."
   }
 }
 
-variable "number" {
-  description = "Whether the random string should include numbers. Defaults to true."
-  type        = bool
-  default     = true
-}
+# -----------------------------------------------------------------------------
+# Optional
+# -----------------------------------------------------------------------------
 
-variable "special" {
-  description = "Whether the random string should include special characters. Defaults to false."
-  type        = bool
-  default     = false
+variable "parameters" {
+  description = "Extension association parameters."
+  type        = map(string)
+  default     = null
+}
+variable "region" {
+  description = "AWS Region where this resource is managed. Defaults to the provider-configured Region."
+  type        = string
+  default     = null
 }

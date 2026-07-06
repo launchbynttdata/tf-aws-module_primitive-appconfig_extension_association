@@ -12,30 +12,44 @@
 
 output "id" {
   description = "The extension association ID."
-  value       = aws_appconfig_extension_association.extension_association.id
+  value       = module.extension_association.id
 }
-
 output "arn" {
   description = "The ARN of the extension association."
-  value       = aws_appconfig_extension_association.extension_association.arn
+  value       = module.extension_association.arn
 }
-
 output "extension_arn" {
   description = "The associated extension ARN."
-  value       = aws_appconfig_extension_association.extension_association.extension_arn
+  value       = module.extension_association.extension_arn
 }
-
 output "extension_version" {
-  description = "The associated extension version."
-  value       = aws_appconfig_extension_association.extension_association.extension_version
+  description = "The extension version."
+  value       = module.extension_association.extension_version
 }
-
 output "resource_arn" {
   description = "The associated resource ARN."
-  value       = aws_appconfig_extension_association.extension_association.resource_arn
+  value       = module.extension_association.resource_arn
+}
+output "expected_extension_arn" {
+  description = "Expected extension ARN."
+  value       = aws_appconfig_extension.example.arn
+}
+output "expected_resource_arn" {
+  description = "Expected resource ARN."
+  value       = aws_appconfig_application.example.arn
+}
+
+output "region" {
+  description = "The AWS Region where the example resources are deployed."
+  value       = data.aws_region.current.region
 }
 
 output "parameters" {
   description = "The extension association parameters."
-  value       = aws_appconfig_extension_association.extension_association.parameters
+  value       = module.extension_association.parameters
+}
+
+output "expected_parameters" {
+  description = "Expected extension association parameters."
+  value       = { NotificationMode = "default" }
 }
