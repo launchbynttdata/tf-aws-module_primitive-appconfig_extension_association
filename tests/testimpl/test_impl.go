@@ -27,18 +27,18 @@ func TestComposableCompleteReadOnly(t *testing.T, ctx types.TestContext) {
 
 func verifyExtensionAssociation(t *testing.T, ctx types.TestContext) (*appconfig.Client, string) {
 	opts := ctx.TerratestTerraformOptions()
-	region := terraform.Output(t, opts, "region")
-	id := terraform.Output(t, opts, "id")
-	arn := terraform.Output(t, opts, "arn")
-	extensionARN := terraform.Output(t, opts, "extension_arn")
-	resourceARN := terraform.Output(t, opts, "resource_arn")
+	region := terraform.OutputContext(t, context.Background(), opts, "region")
+	id := terraform.OutputContext(t, context.Background(), opts, "id")
+	arn := terraform.OutputContext(t, context.Background(), opts, "arn")
+	extensionARN := terraform.OutputContext(t, context.Background(), opts, "extension_arn")
+	resourceARN := terraform.OutputContext(t, context.Background(), opts, "resource_arn")
 	extensionVersion := int32Output(t, ctx, "extension_version")
-	parameters := terraform.OutputMap(t, opts, "parameters")
-	expectedParameters := terraform.OutputMap(t, opts, "expected_parameters")
+	parameters := terraform.OutputMapContext(t, context.Background(), opts, "parameters")
+	expectedParameters := terraform.OutputMapContext(t, context.Background(), opts, "expected_parameters")
 
 	require.NotEqual(t, "", id)
-	assert.Equal(t, terraform.Output(t, opts, "expected_extension_arn"), extensionARN)
-	assert.Equal(t, terraform.Output(t, opts, "expected_resource_arn"), resourceARN)
+	assert.Equal(t, terraform.OutputContext(t, context.Background(), opts, "expected_extension_arn"), extensionARN)
+	assert.Equal(t, terraform.OutputContext(t, context.Background(), opts, "expected_resource_arn"), resourceARN)
 	assert.Equal(t, expectedParameters, parameters)
 
 	client := appConfigClient(t, region)
@@ -83,7 +83,7 @@ func appConfigClient(t *testing.T, region string) *appconfig.Client {
 func int32Output(t *testing.T, ctx types.TestContext, name string) int32 {
 	t.Helper()
 
-	value, err := strconv.ParseInt(terraform.Output(t, ctx.TerratestTerraformOptions(), name), 10, 32)
+	value, err := strconv.ParseInt(terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), name), 10, 32)
 	require.NoError(t, err)
 
 	return int32(value)
